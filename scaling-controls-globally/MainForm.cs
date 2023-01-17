@@ -6,31 +6,35 @@ namespace scaling_controls_globally
 {
     public partial class MainForm : Form
     {
-        public MainForm()
+        public MainForm() => InitializeComponent();
+        protected override void OnLoad(EventArgs e)
         {
-            InitializeComponent();
-            comboBox1.SelectedIndex= 0;
-            IterateControlTree(this, (control) =>
+            base.OnLoad(e);
+            if(!DesignMode)
             {
-                if (control is TableLayoutPanel tableLayoutPanel)
+                comboBox1.SelectedIndex = 0;
+                IterateControlTree(this, (control) =>
                 {
-                    tableLayoutPanel.SizeChanged += (sender, e) => _wdtSizeChanged.StartOrRestart();
-                }
-            });
-
-            _wdtSizeChanged.PropertyChanged += (sender, e) =>
-            {
-                if (e.PropertyName!.Equals(nameof(WDT.Busy)) && !_wdtSizeChanged.Busy)
-                {
-                    IterateControlTree(this, (control) =>
+                    if (control is TableLayoutPanel tableLayoutPanel)
                     {
-                        if (control is TableLayoutPanel tableLayoutPanel)
+                        tableLayoutPanel.SizeChanged += (sender, e) => _wdtSizeChanged.StartOrRestart();
+                    }
+                });
+
+                _wdtSizeChanged.PropertyChanged += (sender, e) =>
+                {
+                    if (e.PropertyName!.Equals(nameof(WDT.Busy)) && !_wdtSizeChanged.Busy)
+                    {
+                        IterateControlTree(this, (control) =>
                         {
-                            IterateControlTree(tableLayoutPanel, (child) => onAnyCellPaint(tableLayoutPanel, child));
-                        }
-                    });
-                }
-            };
+                            if (control is TableLayoutPanel tableLayoutPanel)
+                            {
+                                IterateControlTree(tableLayoutPanel, (child) => onAnyCellPaint(tableLayoutPanel, child));
+                            }
+                        });
+                    }
+                };
+            }
         }
 
         WDT _wdtSizeChanged = new WDT { Interval = TimeSpan.FromMilliseconds(100) };
