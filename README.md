@@ -1,9 +1,15 @@
-One way to **scale winforms controls with window size** is to use nested TableLayoutPanel controls and setting the rows and columns to use percent rather than absolute sizing. 
+One way to **scale winforms controls with window size** is to use nested `TableLayoutPanel` controls and set the rows and columns to use percent rather than absolute sizing.
+
+[![nested table layout panels][1]][1]
+
+***
 
 Then, place your controls in the cells and anchor them on all four sides. For buttons that have a backgound image set to stretch this is all you need to do. However, controls that use text may require a custom means to scale the font. For example, you're using ComboBox controls where size is a function of the font not the other way around.
 
+[![resizing results][2]][2]
 
-The above screenshots utilize an extension to do a binary search that changes the font size until a target control height is reached. Something _like_ this would work but you'll probably want to do more testing than I did. The basic idea is to respond to TableLayourPanel size changes by setting a watchdog timer, and when the timer expires iterate the control tree to apply the `BinarySearchFontSize` extension.
+***
+The above screenshots utilize an extension to do a binary search that changes the font size until a target control height is reached. Something _like_ this would work but you'll probably want to do more testing than I did. The basic idea is to respond to `TableLayoutPanel` size changes by setting a watchdog timer, and when the timer expires iterate the control tree to apply the `BinarySearchFontSize` extension. You may want to [clone](https://github.com/IVSoftware/scaling-controls-globally.git) the code I used to test this answer and experiment for yourself to see how the pieces fit together.
 
     static class Extensions
     {
@@ -119,6 +125,5 @@ The above screenshots utilize an extension to do a binary search that changes th
     }
 
 
-
-
-
+  [1]: https://i.stack.imgur.com/Rnktd.png
+  [2]: https://i.stack.imgur.com/USkqU.jpg
