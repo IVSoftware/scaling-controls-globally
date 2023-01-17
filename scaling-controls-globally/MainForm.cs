@@ -50,64 +50,32 @@ namespace scaling_controls_globally
                 {
                     try
                     {
+                        var totalVerticalSpace =
+                            control.Margin.Top + control.Margin.Bottom +
+                            // I'm surprised that the Margin property
+                            // makes a difference here but it does!
+                            tableLayoutPanel.Margin.Top + tableLayoutPanel.Margin.Bottom +
+                            tableLayoutPanel.Padding.Top + tableLayoutPanel.Padding.Bottom;
+                        var pos = tableLayoutPanel.GetPositionFromControl(control);
+                        int height;
+                        float optimal;
                         if (control is ComboBox comboBox)
                         {
+                            height = tableLayoutPanel.GetRowHeights()[pos.Row] - totalVerticalSpace;
                             comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-                            var totalVerticalSpace =
-                                comboBox.Margin.Top + comboBox.Margin.Bottom +
-                                // I'm surprised that the Margin property
-                                // makes a difference here but it does!
-                                tableLayoutPanel.Margin.Top + tableLayoutPanel.Margin.Bottom +
-                                tableLayoutPanel.Padding.Top + tableLayoutPanel.Padding.Bottom;
-
-                            var pos = tableLayoutPanel.GetPositionFromControl(control);
-                            var height = tableLayoutPanel.GetRowHeights()[pos.Row] - totalVerticalSpace;
-                            var optimal = comboBox.BinarySearchFontSize(height);
+                            optimal = comboBox.BinarySearchFontSize(height);
                             comboBox.Font = new Font(comboBox.Font.FontFamily, optimal);
                             comboBox.ItemHeight = height;
-                            return;
-#if false
-                                var graphics = comboBox.CreateGraphics();
-                                float min, max;
-                                SizeF meas;
-                                min = 0; max = comboBox.Font.Size * 2;
-                                var font = comboBox.Font;
-                                string text = string.IsNullOrWhiteSpace(comboBox.Text) ? MEAS_STRING : comboBox.Text;
-                                for (int i = 0; i < 10; i++)
-                                {
-                                    meas = graphics.MeasureString(text, font);
-                                    if (meas.Height < height - 25)
-                                    {
-                                        // Needs to be bigger
-                                        min = font.Size;
-                                    }
-                                    else if(meas.Height > height - 10)
-                                    {
-                                        // Needs to be smaller
-                                        max = font.Size;
-                                    }
-                                    else break;
-                                    font = new Font(comboBox.Font.FontFamily, (min + max) / 2);
-                                }
-                                for (int i = 0; i < 10; i++)
-                                {
-                                    meas = graphics.MeasureString(text, font);
-                                    if (meas.Width < width - 50)
-                                    {
-                                        // Needs to be bigger
-                                        min = font.Size;
-                                    }
-                                    else if (meas.Width > width - 40)
-                                    {
-                                        // Needs to be smaller
-                                        max = font.Size;
-                                    }
-                                    else break;
-                                    font = new Font(comboBox.Font.FontFamily, (min + max) / 2);
-                                }
-                                comboBox.Font = font;
-                                comboBox.ItemHeight = height;
-#endif
+                        }
+                        else if((control is TextBox) || (control is Button) || (control is RadioButton))
+                        {
+                            height = tableLayoutPanel.GetRowHeights()[pos.Row] - totalVerticalSpace;
+                            optimal = control.BinarySearchFontSize(height);
+                            control.Font = new Font(control.Font.FontFamily, optimal);
+                        }
+                        else
+                        {
+
                         }
                     }
                     finally
@@ -192,7 +160,17 @@ namespace scaling_controls_globally
         private static float BinarySearchHorizontalFontSize(Control control)
         {
             var name = control.Name;
-            var text = string.IsNullOrWhiteSpace(control.Text) ? MEAS_STRING : control.Text;
+
+            // Fine-tuning
+            string text;
+            if (control is ButtonBase)
+            {
+                text = "SETTINGS"; // representative max staing
+            }
+            else
+            {
+                text = string.IsNullOrWhiteSpace(control.Text) ? MEAS_STRING : control.Text;
+            }
             var protoFont = control.Font;
             using(var g = control.CreateGraphics())
             {
