@@ -1,9 +1,9 @@
 One way to **scale winforms controls with window size** is to use nested TableLayoutPanel controls and setting the rows and columns to use percent rather than absolute sizing. 
 
-Then, place your controls in the cells and anchor them on all four sides. For buttons that have a backgound image set to stretch this is all you need to do. However, controls that use text may require a custom means to scale the font. This is especially true for the `ComboBox` controls you're using because the size is a function of the font not the other way around. 
+Then, place your controls in the cells and anchor them on all four sides. For buttons that have a backgound image set to stretch this is all you need to do. However, controls that use text may require a custom means to scale the font. For example, you're using ComboBox controls where size is a function of the font not the other way around.
 
 
-The above screenshots utilize an extension to do a binary search that changes the font size until a target control height is reached. Something _like_ this would work but you'll probably want to do more testing than I did.
+The above screenshots utilize an extension to do a binary search that changes the font size until a target control height is reached. Something _like_ this would work but you'll probably want to do more testing than I did. The basic idea is to respond to TableLayourPanel size changes by setting a watchdog timer, and when the timer expires iterate the control tree to apply the `BinarySearchFontSize` extension.
 
     static class Extensions
     {
