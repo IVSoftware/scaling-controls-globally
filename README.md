@@ -9,7 +9,9 @@ Then, place your controls in the cells and anchor them on all four sides. For bu
 [![resizing results][2]][2]
 
 ***
-To compensate for this, the above screenshots utilize an extension to do a binary search that changes the font size until a target control height is reached. Something _like_ this would work but you'll probably want to do more testing than I did. The basic idea is to respond to `TableLayoutPanel` size changes by setting a watchdog timer, and when the timer expires iterate the control tree to apply the `BinarySearchFontSize` extension. You may want to [clone](https://github.com/IVSoftware/scaling-controls-globally.git) the code I used to test this answer and experiment for yourself to see how the pieces fit together.
+To compensate for this, the above screenshots utilize an extension to do a binary search that changes the font size until a target control height is reached. The basic idea is to respond to `TableLayoutPanel` size changes by setting a watchdog timer, and when the timer expires iterate the control tree to apply the `BinarySearchFontSize` extension. You may want to [clone](https://github.com/IVSoftware/scaling-controls-globally.git) the code I used to test this answer and experiment for yourself to see how the pieces fit together. 
+
+Something _like_ this would work but you'll probably want to do more testing than I did.
 
     static class Extensions
     {
