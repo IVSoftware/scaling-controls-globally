@@ -101,8 +101,6 @@ namespace scaling_controls_globally
     }
     static class Extensions
     {
-
-        const string MEAS_STRING = "0123456789ABCDEF"; // Representative 16-char string.
         public static float BinarySearchFontSize(this Control control, float containerHeight)
         {
             float
@@ -157,6 +155,9 @@ namespace scaling_controls_globally
                 return proto.Font.Size;
             }
         }
+        /// <summary>
+        /// Get a font size that fits text into available width.
+        /// </summary>
         private static float BinarySearchHorizontalFontSize(Control control)
         {
             var name = control.Name;
@@ -169,7 +170,7 @@ namespace scaling_controls_globally
             }
             else
             {
-                text = string.IsNullOrWhiteSpace(control.Text) ? MEAS_STRING : control.Text;
+                text = string.IsNullOrWhiteSpace(control.Text) ? "LOCAL FOLDERS" : control.Text;
             }
             var protoFont = control.Font;
             using(var g = control.CreateGraphics())
