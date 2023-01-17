@@ -48,6 +48,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -68,6 +69,8 @@
             this.tableLayoutPanel1.Controls.Add(this.comboBox2, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 2);
+            this.tableLayoutPanel1.ForeColor = System.Drawing.Color.White;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
@@ -108,11 +111,14 @@
             this.comboBox1.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.comboBox1.ItemHeight = 32;
             this.comboBox1.Items.AddRange(new object[] {
-            "Local Folders"});
+            "Local Folders",
+            "Library",
+            "Podcasts"});
             this.comboBox1.Location = new System.Drawing.Point(3, 3);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(199, 38);
             this.comboBox1.TabIndex = 4;
+            this.comboBox1.TabStop = false;
             // 
             // tableLayoutPanelToolbar
             // 
@@ -150,6 +156,7 @@
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(348, 38);
             this.comboBox2.TabIndex = 3;
+            this.comboBox2.TabStop = false;
             // 
             // tableLayoutPanel4
             // 
@@ -385,6 +392,16 @@
             this.button1.TabIndex = 0;
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // panel1
+            // 
+            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(357, 116);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(615, 364);
+            this.panel1.TabIndex = 6;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -423,5 +440,6 @@
         private ComboBoxEx comboBox1;
         private Button button2;
         private Button button4;
+        private Panel panel1;
     }
 }
