@@ -35,6 +35,9 @@ namespace scaling_controls_globally
                     }
                 };
             }
+            // 
+            BeginInvoke(()=> Size = new Size(Width + 1, Height));
+            BeginInvoke(()=> Size = new Size(Width - 1, Height));
         }
 
         WDT _wdtSizeChanged = new WDT { Interval = TimeSpan.FromMilliseconds(100) };
