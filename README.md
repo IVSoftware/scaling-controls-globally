@@ -4,12 +4,12 @@ One way to **scale winforms controls with window size** is to use nested `TableL
 
 ***
 
-Then, place your controls in the cells and anchor them on all four sides. For buttons that have a backgound image set to `BackgroundImageLayout = Stretch` this is all you need to do. However, controls that use text may require a custom means to scale the font. For example, you're using ComboBox controls where size is a function of the font not the other way around.
+Then, place your controls in the cells and anchor them on all four sides. For buttons that have a backgound image set to `BackgroundImageLayout = Stretch` this is all you need to do. However, controls that use text may require a custom means to scale the font. For example, you're using ComboBox controls where size is a function of the font not the other way around. To compensate for this, these actual screenshots utilize an extension to do a binary search that changes the font size until a target control height is reached. 
 
 [![resizing performance][2]][2]
 
 ***
-To compensate for this, the above screenshots utilize an extension to do a binary search that changes the font size until a target control height is reached. The basic idea is to respond to `TableLayoutPanel` size changes by setting a watchdog timer, and when the timer expires iterate the control tree to apply the `BinarySearchFontSize` extension. You may want to [clone](https://github.com/IVSoftware/scaling-controls-globally.git) the code I used to test this answer and experiment for yourself to see how the pieces fit together. 
+The basic idea is to respond to `TableLayoutPanel` size changes by setting a watchdog timer, and when the timer expires iterate the control tree to apply the `BinarySearchFontSize` extension. You may want to [clone](https://github.com/IVSoftware/scaling-controls-globally.git) the code I used to test this answer and experiment for yourself to see how the pieces fit together. 
 
 Something _like_ this would work but you'll probably want to do more testing than I did.
 
