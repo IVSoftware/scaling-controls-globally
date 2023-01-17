@@ -35,7 +35,7 @@ namespace scaling_controls_globally
                     }
                 };
             }
-            // 
+            // Induce a size change to initialize the font resizer.
             BeginInvoke(()=> Size = new Size(Width + 1, Height));
             BeginInvoke(()=> Size = new Size(Width - 1, Height));
         }
